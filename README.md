@@ -26,6 +26,9 @@ An LLM-based verification tool designed to catch subtle, fluent, and highly conf
 ---
 ## System Architecture
 
+
+
+```text
 [Input Text Block]
         │
         ▼
@@ -55,26 +58,90 @@ An LLM-based verification tool designed to catch subtle, fluent, and highly conf
   "is_contradictory": true,
   "reason": "Explanation of conflicting statements"
 }
+```
 
+### Workflow
+
+1. **Input Text** is passed to the `ContradictionDetector`.
+2. The detector loads configuration settings and injects a specialized contradiction-detection prompt.
+3. A structured **Pydantic schema** is attached to enforce deterministic JSON outputs.
+4. The processed prompt is sent to **Gemini 2.5 Flash**.
+5. The model performs:
+   - Logical consistency checks
+   - Timeline validation
+   - Mathematical verification
+   - Narrative coherence analysis
+6. The final result is returned as a structured JSON object containing:
+   - `is_contradictory` → Boolean verdict
+   - `reason` → Detailed explanation of the detected contradiction (if any)
+
+### Example Output
+
+```json
+{
+  "is_contradictory": true,
+  "reason": "The text claims that interest rates were raised by 50 basis points while also stating that rates remained unchanged. These statements are mutually exclusive."
+}
+```
 ---
 ## Project Structure:
 
 
+## 📂 Project Structure
+
+```text
 AI-Contradiction-Detector/
 │
-├── src/
-│   ├── detector.py
-│   ├── prompt.py
-│   ├── config.py
-│   └── schemas.py
-│
 ├── data/
-│   └── test_cases.json
+│   └── test_cases.json          # Evaluation dataset containing contradiction test cases
 │
-├── run_eval.py
-├── requirements.txt
-├── .env
-└── README.md
+├── src/
+│   ├── config.py                # Configuration settings and model parameters
+│   ├── detector.py              # Main contradiction detection engine
+│   ├── prompt.py                # Prompt templates and reasoning instructions
+│   └── schemas.py               # Pydantic response schemas
+│
+├── run_eval.py                  # Evaluation harness for testing detector performance
+├── requirements.txt             # Project dependencies
+├── .env                         # Environment variables (API keys)
+├── .gitignore                   # Git ignore rules
+└── README.md                    # Project documentation
+```
+
+### Directory Overview
+
+| File / Folder | Purpose |
+|--------------|----------|
+| `src/detector.py` | Core contradiction detection pipeline |
+| `src/prompt.py` | Contains structured instructions for contradiction analysis |
+| `src/config.py` | Centralized configuration and model settings |
+| `src/schemas.py` | Pydantic models for type-safe outputs |
+| `data/test_cases.json` | Validation dataset used during evaluation |
+| `run_eval.py` | Runs test cases and calculates performance metrics |
+| `.env` | Stores Gemini API credentials securely |
+| `requirements.txt` | Lists all required Python packages |
+| `README.md` | Project documentation and setup guide |
+
+### High-Level Flow
+
+```text
+test_cases.json
+        │
+        ▼
+   run_eval.py
+        │
+        ▼
+ContradictionDetector
+        │
+        ▼
+ Gemini 2.5 Flash
+        │
+        ▼
+Structured Verdict
+        │
+        ▼
+ Evaluation Results
+```
 ---
 ## Where the AI Gave Wrong/Weak Output & How I Fixed It
 
