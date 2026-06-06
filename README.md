@@ -2,10 +2,21 @@
 
 An LLM-based verification tool designed to catch subtle, fluent, and highly confident self-contradictions in text—the type of logical hallucinations that easily bypass human readers and standard keyword filters.
 
+
 ---
 
-## What Was Built
-I built a Python-based evaluation framework that leverages an LLM (e.g., GPT-4o / Claude 3.5 Sonnet) forced into a strict Chain-of-Thought (CoT) reasoning path. The system ingests text blocks, isolates distinct logical claims, cross-references them for compatibility, and outputs a structured JSON evaluation containing a boolean flag and a specific diagnostic reason.
+##  Features
+
+-  Detects logical self-contradictions
+-  Identifies timeline and chronological inconsistencies
+-  Verifies mathematical and numerical claims
+-  Structured JSON output using Pydantic
+-  Deterministic inference (`temperature = 0.0`)
+-  Lightweight architecture with minimal dependencies
+-  Production-ready evaluation pipeline
+-  Extensible multi-agent verification architecture
+
+---
 
 ## Key Engineering Decisions & Why
 1. **JSON Enforcement via System Prompting:** Instead of letting the model reply with freeform text, the prompt forces a strict JSON schema (`is_contradictory` and `reason`). This ensures the detector can easily be integrated into automated CI/CD pipelines or database workflows.
@@ -13,7 +24,58 @@ I built a Python-based evaluation framework that leverages an LLM (e.g., GPT-4o 
 3. **Deterministic Settings:** The model is configured with a `temperature` of `0.0` to minimize creative variance and ensure consistent evaluation passes.
 
 ---
+## System Architecture
 
+[Input Text Block]
+        │
+        ▼
+┌─────────────────────────────────────────────┐
+│ ContradictionDetector                       │
+│ (src/detector.py)                           │
+└─────────────────┬───────────────────────────┘
+                  │
+                  ├── Load Configurations
+                  ├── Inject System Prompt
+                  ├── Deterministic Sampling
+                  └── Bind Pydantic Schema
+                  │
+                  ▼
+┌─────────────────────────────────────────────┐
+│ Gemini 2.5 Flash                            │
+│                                             │
+│ • Logical Reasoning                         │
+│ • Timeline Validation                       │
+│ • Mathematical Verification                 │
+│ • Narrative Consistency Analysis            │
+└─────────────────┬───────────────────────────┘
+                  │
+                  ▼
+
+{
+  "is_contradictory": true,
+  "reason": "Explanation of conflicting statements"
+}
+
+---
+## Project Structure:
+
+
+AI-Contradiction-Detector/
+│
+├── src/
+│   ├── detector.py
+│   ├── prompt.py
+│   ├── config.py
+│   └── schemas.py
+│
+├── data/
+│   └── test_cases.json
+│
+├── run_eval.py
+├── requirements.txt
+├── .env
+└── README.md
+---
 ## Where the AI Gave Wrong/Weak Output & How I Fixed It
 
 During initial iterations, the AI model acting as the detector suffered from two major flaws when trying to identify confident errors:
@@ -28,6 +90,57 @@ During initial iterations, the AI model acting as the detector suffered from two
 * **How I Caught It:** Systematic boundary testing with historical text cases containing intentionally broken arithmetic.
 * **The Fix:** I altered the prompt's structural checklist, explicitly commanding the LLM to: *"Calculate the mathematical and chronological differences between any dates, percentages, or metrics mentioned to verify their alignment."*
 
+---
+ Sample Output
+=================================================
+Starting Detector Evaluation Engine
+=================================================
+
+[Case #1]
+Expected : True
+Detected : True
+Status   : PASSED
+
+[Case #2]
+Expected : True
+Detected : True
+Status   : PASSED
+
+[Case #3]
+Expected : False
+Detected : False
+Status   : PASSED
+
+[Case #4]
+Expected : True
+Detected : True
+Status   : PASSED
+
+[Case #5]
+Expected : False
+Detected : False
+Status   : PASSED
+
+=================================================
+Final Score: 5/5 Cases Correctly Identified
+=================================================
+ Use Cases
+AI Evaluation Platforms
+Hallucination Detection
+Output Verification
+Response Auditing
+Enterprise QA Systems
+Automated Content Validation
+Compliance Checking
+Documentation Review
+Research Applications
+LLM Reliability Studies
+Reasoning Benchmarks
+Agentic Evaluation Frameworks
+Multi-Agent Systems
+Verification Agents
+Debate Frameworks
+Safety Monitoring Layers
 ---
 
 ## Measuring Reliability & False-Positive Risks
