@@ -188,26 +188,39 @@ Expected : False
 Detected : False
 Status   : PASSED
 
+## 📈 Evaluation Results
+
+### Sample Output
+
+```text
+=================================================
+Starting Detector Evaluation Engine
+=================================================
+
+[Case #1] PASSED
+[Case #2] PASSED
+[Case #3] PASSED
+[Case #4] PASSED
+[Case #5] PASSED
+
 =================================================
 Final Score: 5/5 Cases Correctly Identified
 =================================================
- Use Cases
-AI Evaluation Platforms
-Hallucination Detection
-Output Verification
-Response Auditing
-Enterprise QA Systems
-Automated Content Validation
-Compliance Checking
-Documentation Review
-Research Applications
-LLM Reliability Studies
-Reasoning Benchmarks
-Agentic Evaluation Frameworks
-Multi-Agent Systems
-Verification Agents
-Debate Frameworks
-Safety Monitoring Layers
+```
+
+### Performance Summary
+
+| Metric | Value |
+|----------|---------|
+| Total Test Cases | 5 |
+| Correct Predictions | 5 |
+| Accuracy | 100% |
+| False Positives | 0 |
+| False Negatives | 0 |
+
+The detector successfully identified all contradiction and non-contradiction cases in the evaluation dataset, demonstrating strong performance on logical reasoning, timeline verification, and consistency analysis tasks.
+
+---
 ---
 
 ## Measuring Reliability & False-Positive Risks
