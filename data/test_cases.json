@@ -1,0 +1,32 @@
+[
+  {
+    "id": 1,
+    "name": "Confident Financial Mismatch",
+    "should_trip": true,
+    "text": "The Federal Reserve's sudden decision to raise interest rates by 50 basis points in March 2023 caught markets completely off guard, leading to a sharp 3% drop in the S&P 500 within minutes of the announcement. Because the central bank maintained its steady, unchanged rate corridor exactly as economists had predicted all winter, institutional investors quickly reallocated capital into high-yield bonds."
+  },
+  {
+    "id": 2,
+    "name": "Subtle Timeline Mismatch",
+    "should_trip": true,
+    "text": "Amelia Earhart's final flight began on May 20, 1937, when she departed from Oakland, California, aiming to circumnavigate the globe. After a grueling two-month journey covering over 22,000 miles, her Lockheed Electra disappeared over the central Pacific Ocean near Howland Island on June 2, 1937, sparking the largest search rescue operation in naval history at the time."
+  },
+  {
+    "id": 3,
+    "name": "Complex Medical Narrative",
+    "should_trip": false,
+    "text": "Type 1 diabetes is characterized by an autoimmune destruction of insulin-producing beta cells in the pancreas, necessitating lifelong exogenous insulin therapy. Conversely, Type 2 diabetes primarily involves insulin resistance, where cells fail to respond effectively to the hormone, though advanced cases may eventually require insulin injections as beta-cell function declines over time."
+  },
+  {
+    "id": 4,
+    "name": "Direct Logical Flip",
+    "should_trip": true,
+    "text": "Photosynthesis is a completely endergonic process, meaning it requires an input of solar energy to synthesize glucose from carbon dioxide and water. Because this metabolic pathway is fundamentally exergonic, plants are able to release massive amounts of thermal energy into the surrounding microclimate during peak daylight hours."
+  },
+  {
+    "id": 5,
+    "name": "Complex Technical Nuance",
+    "should_trip": false,
+    "text": "Python is traditionally classified as an interpreted language because its code is compiled into bytecode and executed by a virtual machine (the JVM or CPython) at runtime, rather than being built directly into native machine code beforehand. However, modern implementations utilize Just-In-Time (JIT) compilers to dynamically compile heavily used bytecode chunks into machine code during execution to boost performance."
+  }
+]
