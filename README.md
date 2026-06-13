@@ -59,7 +59,7 @@ An LLM-based verification tool designed to catch subtle, fluent, and highly conf
   "reason": "Explanation of conflicting statements"
 }
 ```
-## System Architecture
+
 
 ```text
 ┌──────────────────────────┐
