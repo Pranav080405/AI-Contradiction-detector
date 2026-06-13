@@ -59,21 +59,63 @@ An LLM-based verification tool designed to catch subtle, fluent, and highly conf
   "reason": "Explanation of conflicting statements"
 }
 ```
+## System Architecture
+
+```text
+┌──────────────────────────┐
+│    Text Snippet Input    │
+└────────────┬─────────────┘
+             │
+             ▼
+┌──────────────────────────┐
+│   Agent 1: Detector      │
+│ Finds potential conflict │
+└────────────┬─────────────┘
+             │
+             ▼
+┌──────────────────────────┐
+│   Agent 2: Verifier      │
+│ "Can both statements be  │
+│ true under any context?" │
+└────────────┬─────────────┘
+      ┌──────┴──────┐
+      ▼             ▼
+[Yes - Conditional] [No - Clear Mismatch]
+      │             │
+      ▼             ▼
+Drop Alert Flag     Raise Critical Alert
+(False Positive     (Confirmed
+ Saved)              Contradiction)
+```
 
 ### Workflow
 
-1. **Input Text** is passed to the `ContradictionDetector`.
-2. The detector loads configuration settings and injects a specialized contradiction-detection prompt.
-3. A structured **Pydantic schema** is attached to enforce deterministic JSON outputs.
-4. The processed prompt is sent to **Gemini 2.5 Flash**.
-5. The model performs:
-   - Logical consistency checks
-   - Timeline validation
-   - Mathematical verification
-   - Narrative coherence analysis
-6. The final result is returned as a structured JSON object containing:
-   - `is_contradictory` → Boolean verdict
-   - `reason` → Detailed explanation of the detected contradiction (if any)
+1. **Text Snippet Input**
+   - Receives statements, claims, or text snippets for evaluation.
+
+2. **Agent 1: Detector**
+   - Identifies potential conflicts or contradictions between statements.
+   - Flags suspicious pairs for further analysis.
+
+3. **Agent 2: Verifier**
+   - Examines the flagged statements.
+   - Determines whether both statements can be true under any valid context.
+
+4. **Decision Logic**
+   - **Yes – Conditional**
+     - Statements can coexist under certain conditions.
+     - Alert is discarded to avoid false positives.
+   - **No – Clear Mismatch**
+     - Statements are logically incompatible.
+     - Critical contradiction alert is raised.
+
+### Outcome
+
+- Reduces false positives through contextual verification.
+- Ensures only genuine contradictions are flagged.
+- Improves reliability of automated fact-checking and consistency analysis systems.
+
+  
 
 ### Example Output
 
